@@ -30,7 +30,8 @@ from kivymd.uix.button import MDFloatingActionButton
 from text import A
 import sqlite3 
 #Window.size = (330, 650)
-#import webbrowser
+import webbrowser  as wb
+
 #webbrowser.open('http://inventwithpython.com/')
 
 #LabelBase.register(name="Roboto", fn_regular="Roboto-thin.ttf", fn_bold="Roboto-Bold.ttf")
@@ -651,7 +652,7 @@ class TestApp(MDApp):
 
     def build(self):
         global Containor
-        self.theme_cls.primary_palette = "Teal"
+        #self.theme_cls.primary_palette = "Teal"
         Containor = AppScreenManager()
         Clock.schedule_interval(self.check_dark, 1.0/60.0)
         #E = EScreen(name='hi')
