@@ -31,6 +31,7 @@ from text import A
 import sqlite3 
 #Window.size = (330, 650)
 import webbrowser  as wb
+
 #webbrowser.open('http://inventwithpython.com/')
 
 #LabelBase.register(name="Roboto", fn_regular="Roboto-thin.ttf", fn_bold="Roboto-Bold.ttf")
