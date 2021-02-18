@@ -1,15 +1,13 @@
+#I import all the modules that i need, from kivy and kivymd packages
 from kivymd.app import MDApp
 from kivy.uix.screenmanager import ScreenManager, Screen, SlideTransition, ShaderTransition, SwapTransition
-#from kivy.lang import Builder
 from kivy.uix.button import Button
 from kivy.uix.gridlayout import GridLayout
 from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.scatterlayout import ScatterLayout
 from kivy.uix.scrollview import ScrollView
-#from kivy.uix.label import Label
 from kivy.uix.scrollview import ScrollView
 from kivy.core.window import Window
-#from kivy.properties import ObjectProperty
 from kivy.clock import Clock
 from kivy.uix.image import Image, AsyncImage
 from kivy.uix.textinput import TextInput
@@ -23,40 +21,42 @@ from kivymd.uix.list import TwoLineIconListItem,IRightBodyTouch,MDIconButton, Ic
 from kivymd.uix.snackbar import Snackbar
 from kivymd.uix.selectioncontrol import MDCheckbox
 from kivymd.uix.button import MDFloatingActionButton
-#from kivy.core.window import Window
-#from kivy.utils import get_color_from_hex
-#LabelBase.register(name="kannada_mallige", fn_regular='Lohit-Kannada.ttf')
-#LabelBase.register(name="kannada_mallige", fn_regular='Nudi 01 e.ttf', fn_bold='Nudi 01 e b.ttf')
-from text import A
+
+# text module has a  dictionary with key as hyms number and value is string which is nothing but hymn itself
+    #its copyrighted so I cant upload it here
+from text import A # you better comment out this .
+
+#I am using sqlite3  package for the database to  save the hymn data
 import sqlite3 
-#Window.size = (330, 650)
+
+# this module is for directing to my social media handles
 import webbrowser  as wb
 
-#webbrowser.open('http://inventwithpython.com/')
 
-#LabelBase.register(name="Roboto", fn_regular="Roboto-thin.ttf", fn_bold="Roboto-Bold.ttf")
+
+#I need to register the konkani font used in the app
 LabelBase.register(name="kannada_mallige", fn_regular='Nudi 01 e.ttf', fn_bold='Nudi 01 e b.ttf')
-#X = {"A": 63, "AB": 108, "B": 21, "C": 64, "D": 80, "E": 39, "F": 18, "G": 2, "H": 38, "I": 12, "J": 29, "K": 9, "L": 13, "M": 10, "N": 12, "O": 61, "P": 27, "Q": 10, "R": 40, "S": 26, "T": 6, "U": 44, "V": 13}
-#Y = {"A": 63, "B": 21, "C": 64, "D": 80, "E": 39, "F": 18}
+
 X = {"A": 79,  "B": 27, "C": 80, "D": 92, "E": 43, "F": 18, "G": 2, "H": 42, "I": 12,"J": 29, "K": 9, "L": 13, "M": 11, "N": 12, "O": 70, "P": 33, "Q": 10, "R": 40, "S": 26, "T": 6, "U": 47, "V": 13}
 
+#I could have used the loop to this list, infact I did use it and copied the output here, I forget the reason
 labels = ['A1', 'A2', 'A3', 'A4', 'A5', 'A6', 'A7', 'A8', 'A9', 'A10', 'A11', 'A12', 'A13', 'A14', 'A15', 'A16', 'A17', 'A18', 'A19', 'A20', 'A21', 'A22', 'A23', 'A24', 'A25', 'A26', 'A27', 'A28', 'A29', 'A30', 'A31', 'A32', 'A33', 'A34', 'A35', 'A36', 'A37', 'A38', 'A39', 'A40', 'A41', 'A42', 'A43', 'A44', 'A45', 'A46', 'A47', 'A48', 'A49', 'A50', 'A51', 'A52', 'A53', 'A54', 'A55', 'A56', 'A57', 'A58', 'A59', 'A60', 'A61', 'A62', 'A63', 'A64', 'A65', 'A66', 'A67', 'A68', 'A69', 'A70', 'A71', 'A72', 'A73', 'A74', 'A75', 'A76', 'A77', 'A78', 'A79', 'B1', 'B2', 'B3', 'B4', 'B5', 'B6', 'B7', 'B8', 'B9', 'B10', 'B11', 'B12', 'B13', 'B14', 'B15', 'B16', 'B17', 'B18', 'B19', 'B20', 'B21', 'B22', 'B23', 'B24', 'B25', 'B26', 'B27', 'C1', 'C2', 'C3', 'C4', 'C5', 'C6', 'C7', 'C8', 'C9', 'C10', 'C11', 'C12', 'C13', 'C14', 'C15', 'C16', 'C17', 'C18', 'C19', 'C20', 'C21', 'C22', 'C23', 'C24', 'C25', 'C26', 'C27', 'C28', 'C29', 'C30', 'C31', 'C32', 'C33', 'C34', 'C35', 'C36', 'C37', 'C38', 'C39', 'C40', 'C41', 'C42', 'C43', 'C44', 'C45', 'C46', 'C47', 'C48', 'C49', 'C50', 'C51', 'C52', 'C53', 'C54', 'C55', 'C56', 'C57', 'C58', 'C59', 'C60', 'C61', 'C62', 'C63', 'C64', 'C65', 'C66', 'C67', 'C68', 'C69', 'C70', 'C71', 'C72', 'C73', 'C74', 'C75', 'C76', 'C77', 'C78', 'C79', 'C80', 'D1', 'D2', 'D3', 'D4', 'D5', 'D6', 'D7', 'D8', 'D9', 'D10', 'D11', 'D12', 'D13', 'D14', 'D15', 'D16', 'D17', 'D18', 'D19', 'D20', 'D21', 'D22', 'D23', 'D24', 'D25', 'D26', 'D27', 'D28', 'D29', 'D30', 'D31', 'D32', 'D33', 'D34', 'D35', 'D36', 'D37', 'D38', 'D39', 'D40', 'D41', 'D42', 'D43', 'D44', 'D45', 'D46', 'D47', 'D48', 'D49', 'D50', 'D51', 'D52', 'D53', 'D54', 'D55', 'D56', 'D57', 'D58', 'D59', 'D60', 'D61', 'D62', 'D63', 'D64', 'D65', 'D66', 'D67', 'D68', 'D69', 'D70', 'D71', 'D72', 'D73', 'D74', 'D75', 'D76', 'D77', 'D78', 'D79', 'D80', 'D81', 'D82', 'D83', 'D84', 'D85', 'D86', 'D87', 'D88', 'D89', 'D90', 'D91', 'D92', 'E1', 'E2', 'E3', 'E4', 'E5', 'E6', 'E7', 'E8', 'E9', 'E10', 'E11', 'E12', 'E13', 'E14', 'E15', 'E16', 'E17', 'E18', 'E19', 'E20', 'E21', 'E22', 'E23', 'E24', 'E25', 'E26', 'E27', 'E28', 'E29', 'E30', 'E31', 'E32', 'E33', 'E34', 'E35', 'E36', 'E37', 'E38', 'E39', 'E40', 'E41', 'E42', 'E43', 'F1', 'F2', 'F3', 'F4', 'F5', 'F6', 'F7', 'F8', 'F9', 'F10', 'F11', 'F12', 'F13', 'F14', 'F15', 'F16', 'F17', 'F18', 'G1', 'G2', 'H1', 'H2', 'H3', 'H4', 'H5', 'H6', 'H7', 'H8', 'H9', 'H10', 'H11', 'H12', 'H13', 'H14', 'H15', 'H16', 'H17', 'H18', 'H19', 'H20', 'H21', 'H22', 'H23', 'H24', 'H25', 'H26', 'H27', 'H28', 'H29', 'H30', 'H31', 'H32', 'H33', 'H34', 'H35', 'H36', 'H37', 'H38', 'H39', 'H40', 'H41', 'H42', 'I1', 'I2', 'I3', 'I4', 'I5', 'I6', 'I7', 'I8', 'I9', 'I10', 'I11', 'I12', 'J1', 'J2', 'J3', 'J4', 'J5', 'J6', 'J7', 'J8', 'J9', 'J10', 'J11', 'J12', 'J13', 'J14', 'J15', 'J16', 'J17', 'J18', 'J19', 'J20', 'J21', 'J22', 'J23', 'J24', 'J25', 'J26', 'J27', 'J28', 'J29', 'K1', 'K2', 'K3', 'K4', 'K5', 'K6', 'K7', 'K8', 'K9', 'L1', 'L2', 'L3', 'L4', 'L5', 'L6', 'L7', 'L8', 'L9', 'L10', 'L11', 'L12', 'L13', 'M1', 'M2', 'M3', 'M4', 'M5', 'M6', 'M7', 'M8', 'M9', 'M10', 'M11', 'N1', 'N2', 'N3', 'N4', 'N5', 'N6', 'N7', 'N8', 'N9', 'N10', 'N11', 'N12', 'O1', 'O2', 'O3', 'O4', 'O5', 'O6', 'O7', 'O8', 'O9', 'O10', 'O11', 'O12', 'O13', 'O14', 'O15', 'O16', 'O17', 'O18', 'O19', 'O20', 'O21', 'O22', 'O23', 'O24', 'O25', 'O26', 'O27', 'O28', 'O29', 'O30', 'O31', 'O32', 'O33', 'O34', 'O35', 'O36', 'O37', 'O38', 'O39', 'O40', 'O41', 'O42', 'O43', 'O44', 'O45', 'O46', 'O47', 'O48', 'O49', 'O50', 'O51', 'O52', 'O53', 'O54', 'O55', 'O56', 'O57', 'O58', 'O59', 'O60', 'O61', 'O62', 'O63', 'O64', 'O65', 'O66', 'O67', 'O68', 'O69', 'O70', 'P1', 'P2', 'P3', 'P4', 'P5', 'P6', 'P7', 'P8', 'P9', 'P10', 'P11', 'P12', 'P13', 'P14', 'P15', 'P16', 'P17', 'P18', 'P19', 'P20', 'P21', 'P22', 'P23', 'P24', 'P25', 'P26', 'P27', 'P28', 'P29', 'P30', 'P31', 'P32', 'P33', 'Q1', 'Q2', 'Q3', 'Q4', 'Q5', 'Q6', 'Q7', 'Q8', 'Q9', 'Q10', 'R1', 'R2', 'R3', 'R4', 'R5', 'R6', 'R7', 'R8', 'R9', 'R10', 'R11', 'R12', 'R13', 'R14', 'R15', 'R16', 'R17', 'R18', 'R19', 'R20', 'R21', 'R22', 'R23', 'R24', 'R25', 'R26', 'R27', 'R28', 'R29', 'R30', 'R31', 'R32', 'R33', 'R34', 'R35', 'R36', 'R37', 'R38', 'R39', 'R40', 'S1', 'S2', 'S3', 'S4', 'S5', 'S6', 'S7', 'S8', 'S9', 'S10', 'S11', 'S12', 'S13', 'S14', 'S15', 'S16', 'S17', 'S18', 'S19', 'S20', 'S21', 'S22', 'S23', 'S24', 'S25', 'S26', 'T1', 'T2', 'T3', 'T4', 'T5', 'T6', 'U1', 'U2', 'U3', 'U4', 'U5', 'U6', 'U7', 'U8', 'U9', 'U10', 'U11', 'U12', 'U13', 'U14', 'U15', 'U16', 'U17', 'U18', 'U19', 'U20', 'U21', 'U22', 'U23', 'U24', 'U25', 'U26', 'U27', 'U28', 'U29', 'U30', 'U31', 'U32', 'U33', 'U34', 'U35', 'U36', 'U37', 'U38', 'U39', 'U40', 'U41', 'U42', 'U43', 'U44', 'U45', 'U46', 'U47', 'V1', 'V2', 'V3', 'V4', 'V5', 'V6', 'V7', 'V8', 'V9', 'V10', 'V11', 'V12', 'V13']
 
-#for i, j in X.items():
-#    for m in range(j):
-#        a = str(i)+str(m+1)
-#        labels.append(a)
 
-
+#this class can be used for customising the screen manager class, I did not customise here anything
 class AppScreenManager(ScreenManager):
 
     def __init__(self, **kwargs):
         super(AppScreenManager, self).__init__(**kwargs)
 
+
+
+
+#this is the class for Main_navigation_screen
 class Mainnavscreen(Screen):
     def __init__(self, **kwargs):
         super(Mainnavscreen, self).__init__(**kwargs)
-        #global Containor
+        
         global Mdnavigationdrawer
         navigationLayout = NavigationLayout()
         Containor = ScreenManager()
@@ -64,9 +64,9 @@ class Mainnavscreen(Screen):
         navigationLayout.add_widget(Containor)
         
         Mdnavigationdrawer = MDNavigationDrawer()
-        box = BoxLayout(orientation='vertical')#, padding=Window.height*0.01)#, spacing=Window.height*0.01)
+        box = BoxLayout(orientation='vertical')
         box.add_widget(Button(background_normal="Pictures/banner.webp",size_hint=(1, None), size=(0, Window.height*0.5)))
-        Drawer_list = {"star":"Starred","settings": "Settings","bookmark":"Rate & Share"} #"account-badge":"About", "update":"Check for update","bookmark": "Rate", "share":"Share"} 
+        Drawer_list = {"star":"Starred","settings": "Settings","bookmark":"Rate & Share"} 
         for i,j in Drawer_list.items():
             Item = TwoLineIconListItem(text=str(j))
             Item.add_widget(IconLeftWidget(icon=str(i)))
@@ -89,8 +89,12 @@ class Mainnavscreen(Screen):
 
         elif obj.text == "Index":
             snack_bar_index().show()
+
+
+
+
         
-                                        
+##database to store the starred  hymns                                 
 conn = sqlite3.connect('star.db')
 c = conn.cursor()
 
@@ -111,10 +115,14 @@ def star():
         c.execute("INSERT INTO star(list) VALUES(?)", [i])
     conn.commit()
     conn.close()
+##databse code end
 
 
 
 
+
+
+#this is the class for screen where you could find your starred hymns
 class Starred(Screen):
     
     def __init__(self, **kwargs):
@@ -166,7 +174,7 @@ class Starred(Screen):
                      markup=True,   background_color=(1,1,1,0), size_hint=(None, None), halign='left', valign = 'center', pos=(0, Window.height-100), color=(0,0,0,1))# valign = 'top')
             btn.bind(on_release=self.Screens_2)
             
-            #btn.bind(on_release=self.Screens_2)
+            
             
             layout.add_widget(btn)
             
@@ -177,9 +185,9 @@ class Starred(Screen):
         box = BoxLayout(orientation='vertical')
         toolbar = TwoLineIconListItem(bg_color=(0, .588, .533,1))
         back_icon = IconLeftWidget(icon='arrow-left-thick')
-        #star_icon = IconRightWidget(icon='star-outline')
+        
         back_icon.bind(on_release=self.back)
-        #star_icon.bind(on_release=self.bookmark)
+        
         toolbar.add_widget(back_icon)
         
         box.add_widget(toolbar)
@@ -196,7 +204,10 @@ class Starred(Screen):
         Containor.add_widget(Main_2(letter = str(instant.id), name = str(instant.id)))
         Containor.current = str(instant.id)
 
-        
+
+
+
+#class for main screen Toolbar        
 class Toolbar(MDToolbar):
     def __init__(self, **kwargs):
         super(Toolbar,self).__init__(**kwargs)
@@ -204,8 +215,7 @@ class Toolbar(MDToolbar):
         self.left_action_items = [["menu", self.drawer]]
         self.right_action_items = [["magnify", self.search]]
         self.elevation = 10
-        #self.title = u"ಗಿತಾಂ"
-        #self.font_name = 'kannada_mallige'
+        
         
         
 
@@ -219,13 +229,20 @@ class Toolbar(MDToolbar):
         else:
             Snackbar(text="Invalid").show()
 
+
+
+#variable to keep track wheather the textfield is focused or not
 Focus = False
 
-            
+
+
+
+
+#class for main screen which will be added to screenManager            
 class Main(Screen):
     def __init__(self, **kwargs):
         super(Main, self).__init__(**kwargs)
-        #global text_main
+        
         view = ScrollView()
         layout = GridLayout(cols=2, padding=Window.height*0.015,spacing=Window.height*0.015, size_hint_y=None)
         layout.bind(minimum_height=layout.setter("height"))
@@ -234,25 +251,23 @@ class Main(Screen):
         for i in X.keys():
             
             button = Button(background_normal='Pictures/'+i+'.webp', size=(50, Window.height*0.3), size_hint=(1, None),text=str(i), color=(0,0,0,0))
-            #, size=(50, Window.height*0.1), size_hint=(1, None),
-                                        #background_color=(0, 0.6, 1, 0.9), color=(1, 1, 1, 1), border=(2,2,2,2), bold=True))
+            
             button.bind(on_release=self.snack_bar)
             Genre_buttons.append(button)
             layout.add_widget(button)
 
-        #scrollview = ScrollView(size_hint=(1, None), size=(Window.width, Window.height))
-        #scrollview.add_widget(layout)
+        
         view.add_widget(layout)
         
 
         box = BoxLayout(orientation='vertical', spacing=Window.height*0.01)
         T = Toolbar()
         box.add_widget(T)
-        #box_hor = BoxLayout(padding=Window.height*0.01, size_hint=(1, 0.11))
+        
         global text_main
         text_main = CTextInput(multiline=False, size=(0,Window.height*0.09), size_hint_x=1, size_hint_y=None, font_size=Window.height*0.08)
         text_main.bind(on_text_validate=self.on_text)
-        #box_hor.add_widget(t)#size_hint=(0.95, None), size=(0, Window.height*0.07)))#, right_action_items=[['magnify', self.search]]))
+        
         
         box.add_widget(text_main)
         box.add_widget(view)
@@ -270,7 +285,7 @@ class Main(Screen):
         if str(obj.text.upper()) in labels:
             Containor.add_widget(Main_2(name = str(obj.text.upper()),letter = str(obj.text.upper())))
             
-            #time.sleep(1)
+            
             Containor.current = str(obj.text.upper())
         else:
             Snackbar(text="Invalid").show()
@@ -280,6 +295,10 @@ class Main(Screen):
         loading = snack_bar(Letter=obj.text)
         loading.show()
 
+
+
+
+#customised snackbar
 class snack_bar(Snackbar):
     def __init__(self, Letter, **kwargs):
         super(snack_bar, self).__init__(**kwargs)
@@ -292,48 +311,15 @@ class snack_bar(Snackbar):
         Containor.add_widget(Main_1(Letter=str(self.Letter), name =str(self.Letter)))
         Containor.current = str(self.Letter)
 
-class Main_1_(Screen):
-    
-    def __init__(self,Letter, **kwargs):
-        super(Main_1_, self).__init__(**kwargs)
-        
-        view = ScrollView()
-        layout = GridLayout(cols=1, padding=Window.height*0.01,spacing=Window.height*0.01, size_hint_y=None)
-        layout.bind(minimum_height=layout.setter("height"))
-        
-        for j in range(X[str(Letter)]):
-            i = str(Letter)+str(j+1)
-            
-            btn = Button(text=str(i), 
-                         size=(Window.width, Window.height*0.1), size_hint=(1, None), color=(0,0,0,1))# valign = 'top')
-            #btn.bind(size=self.setter('text_size'))
-            im = Image(source='Pictures/'+str(i)+'.webp', size_hint=(1, None),
-                            size=(0, Window.height*0.4))
-            btn.bind(on_release=self.Screens_2)
-            
-            #btn.bind(on_release=self.Screens_2)
-            layout.add_widget(btn)
-            layout.add_widget(im)
-            
 
-        
-        view.add_widget(layout)
-
-        box = BoxLayout(orientation='vertical')
-        #t = Toolbar_1()
-        #box.add_widget(t)
-        
-        box.add_widget(view)
-        self.add_widget(box) 
-
-    def Screens_2(self, instant):
-        Containor.add_widget(Main_2(letter = str(instant.text), name = str(instant.text)))
-        Containor.current = str(instant.text)
-
+#customised button
 class Cbutton(Button):
     def __init__(self, lts, **kwargs):
         super(Cbutton, self).__init__(**kwargs)
         self.lts = lts
+
+
+#class for second screen where the Letters of the Index are shown in tile format
 class Main_1(Screen):
     
     def __init__(self, Letter, **kwargs):
@@ -347,8 +333,7 @@ class Main_1(Screen):
         view = ScrollView()
         layout = GridLayout(cols=1, padding=Window.height*sp,spacing=Window.height*sp, size_hint_y=None)
         layout.bind(minimum_height=layout.setter("height"))
-        #global Letter_image_buttons
-        #Letter_image_buttons = []
+        
         for i in range(X[str(Letter)]):
             no = i
             letter = Letter+str(i+1)
@@ -377,18 +362,16 @@ class Main_1(Screen):
             for i in m:
                 if len(i) >= j:
                     j = len(i)
-            #btn = MDRoundFlatButton(font_name="kannada_mallige",text=x)
+            
             size_y = Window.height*0.05*(len(m))
             size_x = j*Window.height*0.042/2.25
             if Window.width > size_x:
                 size_x = Window.width
             btn = Cbutton(lts=letter, font_name="kannada_mallige",text="[font=Roboto-Bold][b][size="+str(int(Window.height*0.05))+']'+str(letter)+'. '+'[/size][/b][/font]'+x+"[font=Roboto-Bold][b][size="+str(int(Window.height*0.05))+']'+' '+'[/size][/b][/font]',
                     bold=True,  markup=True, size=(size_x,size_y ), font_size=(Window.height*0.04), background_color=(1,1,1,0),
-                        size_hint=(None, None), halign='left', valign = 'center', pos=(0, Window.height-100), color=(0,0,0,1))# valign = 'top')
-            #lbl = Label(background_color=(0/256, 128/256, 128/256, 1), size_hint=(None, None),size=(Window.width, Window.height*0.05))
-            #btn.bind(size=self.setter('text_size'))
+                        size_hint=(None, None), halign='left', valign = 'center', pos=(0, Window.height-100), color=(0,0,0,1))
             btn.bind(on_release=self.Screens_2)
-            #root = ScrollView(size_hint=(1, Window.height*0.3))
+        
             
             
             layout.add_widget(btn)
@@ -398,17 +381,17 @@ class Main_1(Screen):
         box = BoxLayout(orientation='vertical')
         toolbar = TwoLineIconListItem(bg_color=(0, .588, .533,1))
         back_icon = IconLeftWidget(icon='arrow-left-thick')
-        #star_icon = IconRightWidget(icon='star-outline')
+        
         back_icon.bind(on_release=self.back)
-        #star_icon.bind(on_release=self.bookmark)
+        
         toolbar.add_widget(back_icon)
         
         box.add_widget(toolbar)
-        #t = Toolbar_1()
-        #box.add_widget(t)
         
         box.add_widget(view)
         self.add_widget(box)
+
+        
     def back(self, obj):
         Containor.current = Containor.screens[-2].name
         del Containor.screens[-1]
@@ -418,19 +401,18 @@ class Main_1(Screen):
         
         Containor.add_widget(Main_2(letter = str(instant.lts), name = str(instant.lts)))
         Containor.current = str(instant.lts)
-class Main_2_(Screen):
-    def __init__(self, letter,**kwargs):
-        super(Main_2_, self).__init__(**kwargs)
-        
-        box = BoxLayout(orientation="vertical")
-        box.add_widget(Toolbar_2())
-        scatter = ScatterLayout()
-        scatter.add_widget(Image(source='Pictures/'+str(letter)+'.webp'))
-        box.add_widget(scatter)
-        self.add_widget(box)
-        self.add_widget(Toolbar_2())
 
-bold = False        
+
+
+#variable to keep track wheather the text is bold or not
+bold = False
+
+
+
+
+
+
+#class for the screen where the hymn is displayed
 class Main_2(Screen):
     def __init__(self, letter,**kwargs):
         super(Main_2, self).__init__(**kwargs)
@@ -456,7 +438,7 @@ class Main_2(Screen):
                     x.append('\n'+a[i])
                 else:
                     x.append(a[i])
-        #x[0] = "[b]"+ str(x[0]) + '[/b]'
+        
         x = ''.join(x)
 
         m = x.split('\n')
@@ -471,26 +453,27 @@ class Main_2(Screen):
             size_x = Window.width
         btn = Label(font_name="kannada_mallige",text="[font=Roboto-Bold][b][size="+str(int(Window.height*0.05))+']'+str(letter)+'. '+'[/size][/b][/font]'+x,
           size=(size_x,size_y ), font_size=(Window.height*0.04),  text_size=(None, None),
-             bold=boldness,   markup=True,   size_hint=(None, None), halign='left', valign = 'top', color=(0,0,0,1))# valign = 'top')
-        #btn.bind(size=self.setter('text_size'))
+             bold=boldness,   markup=True,   size_hint=(None, None), halign='left', valign = 'top', color=(0,0,0,1))
+        
         root = ScrollView(size_hint=(1, 1))
         root.add_widget(btn)
         box = BoxLayout(orientation='vertical')
         toolbar = TwoLineIconListItem(bg_color=(0, .588, .533,1))
         back_icon = IconLeftWidget(icon='arrow-left-thick')
-        #star_icon = IconRightWidget(icon='star-outline')
+       
         back_icon.bind(on_release=self.back)
-        #star_icon.bind(on_release=self.bookmark)
+        
         toolbar.add_widget(back_icon)
-        #toolbar.add_widget(RightCheckbox())
+        
         box.add_widget(toolbar)
         box.add_widget(root)
         self.add_widget(box)
-        #self.add_widget(MDFloatingActionButton(pos_hint={"x":0.9,"y": 0.1},
-        #background_palette="Teal",icon='star-outline',elevation_normal=12))
+        
         star = MDIconButton(icon="star-outline",pos_hint={'right':1,'top':1})
         star.bind(on_release=self.bookmark)
         self.add_widget(star)
+
+        
     def back(self, obj):
         Containor.current = Containor.screens[-2].name
         del Containor.screens[-1]
@@ -505,17 +488,25 @@ class Main_2(Screen):
             star()
             Snackbar(text=str(Containor.current_screen.name)+' is unstarred').show()
 
-line = False                  
+
+
+
+
+
+#variable to check keep track of lines need to been shown in the index page of the hymns
+line = False
+
+#settings page
 class setting(Screen):
     def __init__(self,**kwargs):
         super(setting, self).__init__(**kwargs)
         box = BoxLayout(orientation="vertical")
-        #box.add_widget(Toolbar_1())
+        
         toolbar = TwoLineIconListItem(bg_color=(0, .588, .533,1))
         back_icon = IconLeftWidget(icon='arrow-left-thick')
-        #star_icon = IconRightWidget(icon='star-outline')
+        
         back_icon.bind(on_release=self.back)
-        #star_icon.bind(on_release=self.bookmark)
+        
         toolbar.add_widget(back_icon)
         
         box.add_widget(toolbar)
@@ -564,7 +555,12 @@ class setting(Screen):
         else:
             line = False
             Snackbar(text="Index length decreased").show()
-            
+
+
+
+
+
+#customised snakbar for to show settings saved            
 class snack_bar_index(Snackbar):
     def __init__(self, **kwargs):
         super(snack_bar_index, self).__init__(**kwargs)
@@ -576,6 +572,11 @@ class snack_bar_index(Snackbar):
         Containor.add_widget(Index(name ="index"))
         Containor.current = "index"
 
+
+
+
+
+#screen for index page
 class Index(Screen):
     
     def __init__(self, **kwargs):
@@ -584,8 +585,6 @@ class Index(Screen):
         view = ScrollView()
         layout = GridLayout(cols=1, padding=Window.height*0.01,spacing=Window.height*0.05, size_hint_y=None)
         layout.bind(minimum_height=layout.setter("height"))
-        #global Letter_image_buttons
-        #Letter_image_buttons = []
         
         for i in labels:
             s = i
@@ -624,14 +623,13 @@ class Index(Screen):
         box = BoxLayout(orientation='vertical')
         toolbar = TwoLineIconListItem(bg_color=(0, .588, .533,1))
         back_icon = IconLeftWidget(icon='arrow-left-thick')
-        #star_icon = IconRightWidget(icon='star-outline')
+        
         back_icon.bind(on_release=self.back)
-        #star_icon.bind(on_release=self.bookmark)
+        
         toolbar.add_widget(back_icon)
         
         box.add_widget(toolbar)
-        #t = Toolbar_1()
-        #box.add_widget(t)
+        
         
         box.add_widget(view)
         self.add_widget(box)
@@ -645,9 +643,16 @@ class Index(Screen):
         Containor.add_widget(Main_2(letter = str(instant.lts), name = str(instant.lts)))
         Containor.current = str(instant.lts)
 
+
+
+
+#variable to keep track of the theme(dark or not )
 dark = False
+
+
+#Main app Class where all othe widgets are added 
 class TestApp(MDApp):
-    #title = 'H...Ns'
+    
     icon = 'icon.png'
 
     def build(self):
@@ -655,8 +660,7 @@ class TestApp(MDApp):
         #self.theme_cls.primary_palette = "Teal"
         Containor = AppScreenManager()
         Clock.schedule_interval(self.check_dark, 1.0/60.0)
-        #E = EScreen(name='hi')
-        #Containor.add_widget(E)
+        
         Containor.add_widget(Mainnavscreen(name="main"))
         return Containor
     
@@ -673,13 +677,13 @@ class TestApp(MDApp):
      
 
     def back(self, window, key, *largs):
-        #x = Containor.screens
+        
         if key == 27 and Containor.current_screen != Containor.screens[0]:
             
             
             def set_focus(dt):
                 text_main.focus = True
-            #Clock.schedule_once(set_focus, 1)
+            
             Containor.current = Containor.screens[-2].name
             del Containor.screens[-1]
             return True
@@ -687,6 +691,7 @@ class TestApp(MDApp):
 
 
 
+#Entry screen, this class is not used(instantiated)
 class EScreen(Screen):
     def __init__(self, **kwargs):
         super(EScreen, self).__init__(**kwargs)
@@ -695,7 +700,7 @@ class EScreen(Screen):
         Clock.schedule_once(self.add_main, 0.1)
         Clock.schedule_once(self.main_invoke, 5)
         
-        #self.add_widget()#Image(source='Pictures/presplash.png', size_hint=(1,1)))
+        
 
     def add_main(self, dt):
         Containor.add_widget(Mainnavscreen(name="main"))
@@ -704,6 +709,9 @@ class EScreen(Screen):
             
             Containor.current = "main"
 
+
+
+#Customise text Input widget
 class CTextInput(TextInput):
 
     def __init__(self, **kwargs):
@@ -712,7 +720,7 @@ class CTextInput(TextInput):
 
 
         super(CTextInput, self).__init__(**kwargs)
-        #self.mode = "rectangle"
+        
         self.font_size = Window.height*0.07
         self.multiline = False
         Clock.schedule_interval(self.focus_check, 1.0/60.0)
@@ -722,8 +730,6 @@ class CTextInput(TextInput):
     def focus_check(self, dt):
         if self.text != '':
             self.font_name = "Roboto"
-        #if self.focus == True:
-        #    self.font_name = "Roboto"
         else:
             self.font_name =  "kannada_mallige"
         
@@ -732,10 +738,9 @@ class CTextInput(TextInput):
             self.font_name = "Roboto"
         def set_focus(dt):
             self.focus = True
-        #Clock.schedule_once(set_focus, 1)
+        
     
     
 if __name__ == '__main__':
-#    Window.clearcolor = get_color_from_hex('#101016')
     TestApp = TestApp()
     TestApp.run()
