@@ -1,1 +1,1 @@
-My first Project. This is a mobile App that has around 3.7K organic downloads in PlayStore.
+My First large scale project, a mobile app, has garnered approximately 4.5K organic downloads on the Play Store, spanning across 190 countries worldwide. With an average rating of 4.7 stars, the app has successfully resonated with users. It is a specialized application centered around local language hymns, delivering the lyrics of these hymns while offering essential features such as a search functionality and a favorite hymns list.
